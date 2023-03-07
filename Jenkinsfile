@@ -6,7 +6,7 @@ pipeline {
   }
 
   parameters {
-    string defaultValue: '3.34.5.73', name: 'TOMCAT_IP'
+    string defaultValue: '172.31.42.138', name: 'TOMCAT_IP'
     string defaultValue: 'ubuntu', name: 'TOMCAT_LOGIN_USER'
     string defaultValue: '/var/lib/tomcat9/webapps', name: 'TOMCAT_WEBAPP_DIR'
   }
