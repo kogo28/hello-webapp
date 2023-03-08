@@ -7,14 +7,14 @@ pipeline {
 
   parameters {
     string name: 'IMAGE_NAME', defaultValue: 'hello-world'
-    string name: 'IMAGE_REGISTRY_ACCOUNT', defaultValue: 'c1t1d0s7'
+    string name: 'IMAGE_REGISTRY_ACCOUNT', defaultValue: 'kogo28'
   }
 
   stages {
     stage('SCM Checkout') {
       agent any
       steps {
-        git branch: 'main', url: 'https://github.com/c1t1d0s7/hello-webapp.git'
+        git branch: 'main', url: 'https://github.com/kogo28/hello-webapp.git'
       }
     }
 
