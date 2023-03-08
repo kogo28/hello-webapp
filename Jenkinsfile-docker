@@ -1,0 +1,60 @@
+pipeline {
+  agent none
+
+  triggers {
+    pollSCM '* * * * *'
+  }
+
+  parameters {
+    string name: 'IMAGE_NAME', defaultValue: 'hello-world'
+    string name: 'IMAGE_REGISTRY_ACCOUNT', defaultValue: 'c1t1d0s7'
+  }
+
+  stages {
+    stage('SCM Checkout') {
+      agent any
+      steps {
+        git branch: 'main', url: 'https://github.com/c1t1d0s7/hello-webapp.git'
+      }
+    }
+
+    stage('Build Maven Project') {
+      agent {
+        docker { image 'maven:3-openjdk-8'}
+      }
+      steps {
+        sh 'mvn clean package -DskipTests=true'
+      }
+    }
+
+    stage('Test Maven Project') {
+      agent {
+        docker { image 'maven:3-openjdk-8'}
+      }
+      steps {
+        sh 'mvn test'
+      }
+    }
+
+    stage('Build Docker Image') {
+      agent any
+      steps {
+        sh "docker image build -t ${params.IMAGE_NAME} ."
+      }
+    }
+
+    stage('Tagging Docker Image') {
+      agent any
+      steps {
+        sh "docker image tag ${params.IMAGE_REGISTRY_ACCOUNT}/${params.IMAGE_NAME}"
+      }
+    }
+
+    stage('Publish Docker Image') {
+      agent any
+      steps {
+        echo "Publish Docker Image"
+      }
+    }
+  }
+}
