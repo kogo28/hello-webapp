@@ -46,7 +46,7 @@ pipeline {
     stage('Tagging Docker Image') {
       agent any
       steps {
-        sh "docker image tag ${params.IMAGE_REGISTRY_ACCOUNT}/${params.IMAGE_NAME}"
+        sh "docker image tag ${params.IMAGE_NAME} ${params.IMAGE_REGISTRY_ACCOUNT}/${params.IMAGE_NAME}"
       }
     }
 
